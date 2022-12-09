@@ -97,10 +97,26 @@ async function postData(url = '', code = '') {
     }
 } 
 
-const codebar = document.querySelector('#code').value;
- const price = postData('https://api.bsale.cl/v1/price_lists/23/details.json?barcode=', codebar) 
-    .then(data => {document.querySelector("#price").innerHTML = (data.items[0].variantValueWithTaxes); // JSON data parsed by `data.json()` call
-    });
+const input = document.getElementById("code");
 
-
-    document.querySelector("#price") = "(data.items[0].variantValueWithTaxes"
+input.addEventListener("keypress", function(event) {
+    // If the user presses the "Enter" key on the keyboard
+    if (event.key === "Enter") {        
+        const codebar = input.value;
+        const price = postData('https://api.bsale.cl/v1/price_lists/23/details.json?barcode=', codebar) 
+            .then(data => {document.querySelector("#price").innerHTML = (data.items[0].variantValueWithTaxes); // JSON data parsed by `data.json()` call
+            
+        });
+        var_product = postData('https://api.bsale.cl//v1/variants.json?barcode=', codebar) 
+            .then(data => {      
+            const id_product=  (data.items[0].product.id)
+            const var_product = data.items[0].description
+            url = "https://api.bsale.cl/v1/products/"+id_product           
+            const product = postData(url, ".json")       
+                .then(data => {document.querySelector("#product").innerHTML = (data.name) + '' + var_product; // JSON data parsed by `data.json()` call
+                console.log(data)
+            });
+            
+        });
+    }
+});
