@@ -105,7 +105,6 @@ input.addEventListener("keypress", function(event) {
         const codebar = input.value;
         const price = postData('https://api.bsale.cl/v1/price_lists/23/details.json?barcode=', codebar) 
             .then(data => {document.querySelector("#price").innerHTML = (data.items[0].variantValueWithTaxes); // JSON data parsed by `data.json()` call
-            
         });
         var_product = postData('https://api.bsale.cl//v1/variants.json?barcode=', codebar) 
             .then(data => {      
@@ -113,7 +112,7 @@ input.addEventListener("keypress", function(event) {
             const var_product = data.items[0].description
             url = "https://api.bsale.cl/v1/products/"+id_product           
             const product = postData(url, ".json")       
-                .then(data => {document.querySelector("#product").innerHTML = (data.name) + '' + var_product; // JSON data parsed by `data.json()` call
+                .then(data => {document.querySelector("#product").innerHTML = (data.name) + ' ' + var_product; // JSON data parsed by `data.json()` call
                 console.log(data)
             });
             
